@@ -16,6 +16,7 @@ class Train
 		@wagons = []
 		@@trains << self
 		@manufacturer = manufacturer
+		@register_instance
 	end
 
 	def self.find(train_number)
