@@ -54,6 +54,7 @@ class MenuActions
     line
   end
 
+  #поезда не включены в список отображения.
   def show_all_stations_and_trains
     puts "Введите номер маршрута: "
     route = route_search(gets.chomp)
