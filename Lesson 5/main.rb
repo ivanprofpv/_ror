@@ -1,3 +1,5 @@
+require 'pry'
+
 require_relative 'station'
 require_relative 'route'
 require_relative 'train'
@@ -65,21 +67,26 @@ class Main
     line
   end
 
-  def create_train
+def create_train
     puts "В этом меню создаются поезда."
     puts "Введите номер поезда: "
     train = gets.chomp
     puts "Выберите тип добавляемого поезда - 'passenger' или 'cargo'"
     train_type = gets.chomp
 
-    if train_type == 'cargo'
-    train_add = CargoTrain.new(train)
-    else
-    train_add = PassengerTrain.new(train)
+    case train_type
+    when :cargo 
+      add_train(CargoTrain.new(train))
+    when :passenger 
+      add_train(PassengerTrain.new(train))
     end
-    @trains << train_add
     puts "Поезд под номером #{train} добавлен!"
     line
+  end
+
+     def add_train(train)
+    @trains << train
+        binding.pry
   end
 
   def create_route
