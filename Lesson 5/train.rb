@@ -9,7 +9,7 @@ class Train
 
 	@@trains = []
 
-	def initialize(train_number, type)
+	def initialize(number, type)
 		@number = number
 		@type = type
 		@speed = 0

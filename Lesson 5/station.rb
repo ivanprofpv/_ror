@@ -18,11 +18,11 @@ class Station
 	end
 
 	def add_trains(number)
-	  @trains << numbers
+	  @trains << number
 	end
 
-	def show_trains
-	  @trains.each { |train| puts "Номер поезда #{train.number}, тип #{train.type}" }
+	def show_trains(number)
+	  @trains.each { |train| puts "Номер поезда #{train.number}" }
 	end
 
 	def show_trains_type(type)
@@ -33,3 +33,4 @@ class Station
 		@trains.delete(number)
 	end
 end
+

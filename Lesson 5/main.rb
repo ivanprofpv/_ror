@@ -5,9 +5,10 @@ require_relative 'passenger_train'
 require_relative 'cargo_train'
 require_relative 'wagon'
 
-class MenuActions
+class Main
 
   attr_reader :stations, :trains, :routes
+  attr_accessor :start
 
   def initialize
    @stations = []
@@ -15,8 +16,8 @@ class MenuActions
    @routes = []
   end
 
-  def train_search(train)
-    train = trains.select { |i| i.train == train }.last
+  def train_search(number)
+    train = trains.select { |i| i.number == number }.last
     return train unless train.nil?
     puts "Нет поездов для отображения!"
   end
@@ -54,7 +55,6 @@ class MenuActions
     line
   end
 
-  #поезда не включены в список отображения.
   def show_all_stations_and_trains
     puts "Введите номер маршрута: "
     route = route_search(gets.chomp)
@@ -72,12 +72,12 @@ class MenuActions
     puts "Выберите тип добавляемого поезда - 'passenger' или 'cargo'"
     train_type = gets.chomp
 
-    case train_type
-    when :cargo
-      then add_train(CargoTrain.new(train))
-    when :passenger
-      then add_train(PassengerTrain.new(train))
+    if train_type == 'cargo'
+    train_add = CargoTrain.new(train)
+    else
+    train_add = PassengerTrain.new(train)
     end
+    @trains << train_add
     puts "Поезд под номером #{train} добавлен!"
     line
   end
@@ -197,41 +197,38 @@ class MenuActions
     @stations << station
   end
 
-  def add_train(train)
-    @trains << train
-  end
-
   def add_route(route)
    @routes << route 
   end
 
+  def start
+      loop do
+        puts "Меню действий: 
+        1. Создать станцию
+        2. Создать поезд
+        3. Создать маршрут
+        4. Управление маршрутами (добавление и удаление промежуточной)
+        5. Установить маршрут поезду
+        6. Прицепить или отцепить вагон от поезда
+        7. Отправить поезд вперед или назад
+        8. Показать список станций и поездов
+        9. Выход"
+        puts "Введите команду цифрой: "
+
+        choise = gets.chomp.to_i
+        case choise
+        when 1 then create_station
+        when 2 then create_train
+        when 3 then create_route
+        when 4 then manage_route  
+        when 5 then set_route_for_train
+        when 6 then add_or_del_wagon
+        when 7 then moving_next_previous_train
+        when 8 then show_all_stations_and_trains
+        when 9 then break
+        end
+      end
+    end
 end
 
-loop do
-  puts "Меню действий: 
-  1. Создать станцию
-  2. Создать поезд
-  3. Создать маршрут
-  4. Управление маршрутами (добавление и удаление промежуточной)
-  5. Установить маршрут поезду
-  6. Прицепить или отцепить вагон от поезда
-  7. Отправить поезд вперед или назад
-  8. Показать список станций и поездов
-  9. Выход"
-  puts "Введите команду цифрой: "
-
-  actions = MenuActions.new
-
-  choise = gets.chomp.to_i
-  case choise
-  when 1 then actions.create_station
-  when 2 then actions.create_train
-  when 3 then actions.create_route
-  when 4 then actions.manage_route  
-  when 5 then actions.set_route_for_train
-  when 6 then actions.add_or_del_wagon
-  when 7 then actions.moving_next_previous_train
-  when 8 then actions.show_all_stations_and_trains
-  when 9 then break
-  end
-end
+Main.new.start

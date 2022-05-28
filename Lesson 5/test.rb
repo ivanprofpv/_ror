@@ -21,7 +21,8 @@ train = PassengerTrain.new('1133')
 train.add_wagon(w1)
 train.add_wagon(w3)
 train.add_wagon(w5)
-train_cargo = CargoTrain.new('1122')
+train_cargo_name = '1111111111'
+train_cargo = CargoTrain.new(train_cargo_name)
 train_cargo.add_wagon(w2)
 train_cargo.add_wagon(w4)
 train_cargo.add_wagon(w6)
@@ -31,9 +32,19 @@ train = PassengerTrain.new('1133')
 train.delete_wagon(w1)
 train.delete_wagon(w3)
 train.delete_wagon(w5)
-train_cargo = CargoTrain.new('1122')
+train_cargo = CargoTrain.new(train_cargo_name)
 train_cargo.delete_wagon(w2)
 train_cargo.delete_wagon(w4)
 train_cargo.delete_wagon(w6)
 puts train_cargo.inspect
 puts train.inspect
+
+@trains = []
+add_train = '111111111111555'
+add_train2 = '111111111111666'
+train2 = CargoTrain.new(add_train)
+      @trains << train2
+train3 = PassengerTrain.new(add_train2)
+      @trains << train3
+
+puts @trains
