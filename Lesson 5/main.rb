@@ -57,6 +57,10 @@ class Main
     line
   end
 
+  def add_station(station)
+    @stations << station
+  end
+
   def show_all_stations_and_trains
     puts "Введите номер маршрута: "
     route = route_search(gets.chomp)
@@ -72,21 +76,38 @@ def create_train
     puts "Введите номер поезда: "
     train = gets.chomp
     puts "Выберите тип добавляемого поезда - 'passenger' или 'cargo'"
-    train_type = gets.chomp
+    train_type = gets.chomp.to_sym
 
-    if train == 'cargo'
-      add_trains = CargoTrain.new(train)
-    else
-      add_trains = PassengerTrain.new(train)
+    case train_type
+    when :cargo
+      add_train(CargoTrain.new(train))
+    when :passenger
+      add_train(PassengerTrain.new(train))
     end
-    add_train(add_trains)
     puts "Поезд под номером #{train} добавлен!"
     line
   end
 
-     def add_train(train)
+  def add_train(train)
     @trains << train
-        binding.pry
+  end
+
+  def moving_next_previous_train
+    puts "В этом меню поезд можно отправить вперед на следующую станцию."
+    puts "Введите номер поезда: "
+    train = train_search(gets.chomp)
+
+    puts "Выберите куда едем: 'next' - вперед или 'back' назад: "
+    choise = gets.chomp.to_sym
+
+    case choise
+    when :next
+      moved = train.next_station
+    when :back
+      moved = train.previous_station
+    end
+      puts moved.nil? ? "Поезд не переехал!" : "Поезд теперь на станции #{current_station}!"
+      line
   end
 
   def create_route
@@ -103,6 +124,10 @@ def create_train
     line
   end
 
+  def add_route(route)
+   @routes << route 
+  end
+
   def manage_route
     puts "В этом меню можно добавить или удалить промежуточную станцию."
     puts "Введите номер маршрута для поиска станции: "
@@ -112,7 +137,7 @@ def create_train
     station_name = route_search(gets.chomp)
 
     puts "Введите 'add' для добавления или 'del' для удаления станции: "
-    choise = gets.chomp
+    choise = gets.chomp.to_sym
 
     station_on_route = search_station_in_route?(station_name, route_number)
     case choise
@@ -164,7 +189,7 @@ def create_train
     wagon = gets.chomp
 
     puts "Введите 'add' для присоединения вагона и 'del' для отцепления вагона от поезда: "
-    choise = gets.chomp
+    choise = gets.chomp.to_sym
 
     case choise
     when :add 
@@ -180,32 +205,6 @@ def create_train
       end
       line
     end
-  end
-
-  def moving_next_previous_train
-    puts "В этом меню поезд можно отправить вперед на следующую станцию."
-    puts "Введите номер поезда: "
-    train = train_search(gets.chomp)
-
-    puts "Выберите куда едем: 'next' - вперед или 'back' назад: "
-    choise = gets.chomp
-
-    case choise
-    when :next
-      moved = train.next_station
-    when :back
-      moved = train.previous_station
-    end
-      puts moved.nil? ? "Поезд не переехал!" : "Поезд теперь на станции #{current_station}!"
-      line
-  end
-
-  def add_station(station)
-    @stations << station
-  end
-
-  def add_route(route)
-   @routes << route 
   end
 
   def start
