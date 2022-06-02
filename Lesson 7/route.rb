@@ -9,8 +9,8 @@ class Route
 	def initialize(route_number, first_station, end_station)
 		@route_number = route_number
 		@stations = [first_station, end_station]
-	  @register_instance
 	  validate!
+	  @register_instance
 	end
 
 	def first_station

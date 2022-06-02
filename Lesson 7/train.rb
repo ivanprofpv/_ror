@@ -16,10 +16,10 @@ class Train
 		@type = type
 		@speed = 0
 		@wagons = []
-		@@trains << self
 		@manufacturer = manufacturer
+    validate!
+    @@trains << self
 		@register_instance
-		validate!
 	end
 
 	def self.find(train_number)
