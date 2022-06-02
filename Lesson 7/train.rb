@@ -9,21 +9,18 @@ class Train
 	include Validator
 	attr_reader :number, :type, :wagons, :route, :speed
 
-	@@trains = []
-
 	def initialize(number, type)
 		@number = number
 		@type = type
 		@speed = 0
 		@wagons = []
 		@manufacturer = manufacturer
-    validate!
-    @@trains << self
+   		validate!
 		@register_instance
 	end
 
 	def self.find(train_number)
-		@@trains.each { |train| train.number == number }
+		@trains.each { |train| train.number == number }
 	end
 
 	def add_wagon(wagon)

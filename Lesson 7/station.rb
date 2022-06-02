@@ -6,17 +6,12 @@ class Station
 	include Validator
 	attr_reader :trains, :name
 
-	@@stations = []
-
 	def initialize(name)
 	  @name = name
 	  @trains = []
 	  validate!
-	  @@stations << self
 	  @register_instance
 	end
-
-	VALID_NAME_STATION = /^[А-Я0-9]{4-15}$/i
 
 	def self.all
 		@@stations

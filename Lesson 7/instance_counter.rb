@@ -9,12 +9,16 @@ module InstanceCounter
     attr_reader :instances
   end
 
+  def current
+    @current ||= []
+  end
+
   module InstanceMethods
 
     protected
     def register_instance
-      self.class.instances ||= 0
-      self.class.instances += 1
+      self.class.current << self
+      self.class.send(:instances=, self.class.current.size) #send вызывает метод instances и показывает текущее значение
     end
 
   end
