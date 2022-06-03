@@ -10,7 +10,7 @@ class Route
 		@route_number = route_number
 		@stations = [first_station, end_station]
 	  validate!
-	  @register_instance
+	  register_instance
 	end
 
 	def first_station
