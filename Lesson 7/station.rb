@@ -13,10 +13,6 @@ class Station
 	  register_instance
 	end
 
-	def self.all
-		@@stations
-	end
-
 	def add_trains(number)
 	  @trains << number
 	end
