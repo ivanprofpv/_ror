@@ -124,6 +124,12 @@ class Main
       line
   end
 
+  def show_all_trains
+    @trains.each do |train|
+      puts "Поезда на станции: #{train.number}"
+    end
+  end
+
   def each_block_wagon_menu
     puts "Введите номер поезда: "
     train = train_search(gets.chomp)
@@ -254,12 +260,6 @@ class Main
     wagon.reserved_seats(1)
     puts "Место(объем) забронировано. Всего свободных мест или свободного объема: #{wagon.available_seats}" 
    end
-  end
-
-  def show_all_trains
-    @trains.each do |train|
-      puts "Поезда на станции: #{train.number}" #вывожу просто об
-    end
   end
 
   def start
